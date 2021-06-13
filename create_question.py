@@ -31,13 +31,13 @@ def lambda_handler(event, context):
         
         return {
             'statusCode': 200,
-            'body': json.dumps('Succesfully inserted temperature!')
+            'body': json.dumps('Succesfully inserted question!')
         }
     except:
         print('Closing lambda function')
         return {
                 'statusCode': 400,
-                'body': json.dumps('Error saving the temperature')
+                'body': json.dumps('Error saving the question')
         }
 
 
