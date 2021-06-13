@@ -8,10 +8,10 @@ def lambda_handler(event, context):
     dynamodb = boto3.resource('dynamodb')
     client = boto3.client('dynamodb')
     
-    # Getting the table the table Temperatures object
+    # Getting the table the table questions object
     questions_table = dynamodb.Table('questions')
     
-    # Getting the current datetime and transforming it to string in the format bellow
+    # current datetime as a potential timestamp attribute
     # event_timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
     question_id = event['question_id']
     question = event['question']
