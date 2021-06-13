@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     questions_table = dynamodb.Table('questions')
     
     # Getting the current datetime and transforming it to string in the format bellow
-    event_timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
+    # event_timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
     question_id = event['question_id']
     question = event['question']
     responses = []
@@ -22,7 +22,7 @@ def lambda_handler(event, context):
         
         questions_table.put_item(
            Item={
-                'event_timestamp': event_timestamp,
+                # 'event_timestamp': event_timestamp,
                 'question_id': question_id,
                 'question': question,
                 'responses': responses
