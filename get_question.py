@@ -33,5 +33,3 @@ def lambda_handler(event, context):
                 'statusCode': 400,
                 'body': json.dumps('Error getting question with id {}'.format(question_id))
         }
-
-lambda_handler({'question_id': '1'}, None)

@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     
     # current datetime as a potential timestamp attribute
     # event_timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
-    question_id = event['question_id']
+    question_id = len(questions_table.scan()['Items']) + 1
     question = event['question']
     responses = []
     
@@ -39,6 +39,3 @@ def lambda_handler(event, context):
                 'statusCode': 400,
                 'body': json.dumps('Error saving the question')
         }
-
-
-
