@@ -37,14 +37,11 @@ def lambda_handler(event, context):
           }
         )
 
-        existing_responses = question['Item']['responses']
-        existing_responses.append(response)
-
         questions_table.update_item(
           Key={
                'question_id': question_id
            },
-           UpdateExpression="SET responses = :responses",
+           UpdateExpression="SET responses = list_append(responses, :response)",
            ExpressionAttributeValues={
             ':response': existing_responses,
           }
