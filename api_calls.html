@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <script>
+        // define the callAPI function that takes a first name and last name as parameters
+        var create_question = (question)=>{
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({"question":user_name});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://ekl3omfw35.execute-api.us-east-1.amazonaws.com/dev", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+
+        var create_response = (question_id, response)=>{
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({"question_id":question_id, "response":response});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://ekl3omfw35.execute-api.us-east-1.amazonaws.com/dev/questions", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+
+        var get_questions = ()=>{
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://ekl3omfw35.execute-api.us-east-1.amazonaws.com/dev", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                var parsed_items = JSON.parse(result).body;
+                alert(JSON.stringify(parsed_items));
+            }).catch(error => console.log('error', error));
+        }
+
+        
+    </script>
+  </head>
+  <body>
+      <div>
+        <label>Question :</label>
+        <input type="text" id="question">
+        <button type="button" onclick="create_question(document.getElementById('question').value)">Create Question</button>
+      </div>
+      <hr>
+      <div>
+        <label>Question ID :</label>
+        <input type="text" id="question_id">
+        <label>Response : </label>
+        <input type="text" id="response">
+        <button type="button" onclick="create_response(document.getElementById('question_id').value, document.getElementById('response').value)">Create Response</button>
+      </div>
+      <hr>
+      <div>
+        <button type="button" onclick="get_questions()">Get Questions</button>
+      </div>
+  </body>
+</html>

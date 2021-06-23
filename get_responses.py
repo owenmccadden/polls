@@ -27,9 +27,9 @@ def lambda_handler(event, context):
             'body': response['Item']['responses']
         }
 
-    except:
+    except Exception as e:
         print('Closing lambda function')
         return {
                 'statusCode': 400,
-                'body': json.dumps('Error getting question with id {}'.format(question_id))
+                'body': json.dumps('Error getting responses. {}'.format(e))
         }

@@ -1,12 +1,5 @@
 import json
 import boto3
-import decimal
-
-class DecimalEncoder(json.JSONEncoder):
-    def default(self,o):
-        if isinstance(o,decimal.Decimal):
-            return float(o)
-        super(DecimalEncoder,self).default(o)
 
 def lambda_handler(event, context):
     # Instanciating connection objects with DynamoDB using boto3 dependency
@@ -28,22 +21,17 @@ def lambda_handler(event, context):
                    'question_id': question_id
                }
             )
-            print("test1")
-            print(response['Item'])
-            print("test2")
+            
             if response['Item'] is None:
                 raise KeyError("Question Id does not exist in table.")
                 
-        
         return {
             'statusCode': 200,
-            'body': json.dumps(response)
+            'body': response
         }
-    except:
+    except Exception as e:
         print('Closing lambda function')
         return {
                 'statusCode': 400,
-                'body': json.dumps('Error getting question with id {}'.format(question_id))
+                'body': json.dumps('Error getting question. {}'.format(e))
         }
-
-lambda_handler({"question_id": 10}, "context")

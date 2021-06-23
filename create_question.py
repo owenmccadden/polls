@@ -16,7 +16,7 @@ def lambda_handler(event, context):
     
     # Putting a try/catch to log to user when some error occurs
     try:
-        print(question_id)
+        
         questions_table.put_item(
            Item={
                 'question_id': question_id,
@@ -24,17 +24,14 @@ def lambda_handler(event, context):
                 'responses': responses
             }
         )
-        print(question_id)
         
         return {
             'statusCode': 200,
             'body': json.dumps('Succesfully inserted question!')
         }
-    except:
+    except Exception as e:
         print('Closing lambda function')
         return {
                 'statusCode': 400,
-                'body': json.dumps('Error saving the question')
+                'body': json.dumps('Error saving the question. {}'.format(e))
         }
-
-lambda_handler({'question': "what's up?"}, "context")
