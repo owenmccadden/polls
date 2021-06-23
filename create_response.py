@@ -11,7 +11,6 @@ def lambda_handler(event, context):
     # current datetime as a potential timestamp attribute
     # event_timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
     question_id = event['question_id']
-    response = event['response']
     
     # Putting a try/catch to log to user when some error occurs
     try:
@@ -37,16 +36,13 @@ def lambda_handler(event, context):
           }
         )
 
-        existing_responses = question['Item']['responses']
-        existing_responses.append(response)
-
         questions_table.update_item(
           Key={
                'question_id': question_id
            },
-           UpdateExpression="SET responses = :responses",
+           UpdateExpression="SET responses = list_append(responses, :response)",
            ExpressionAttributeValues={
-            ':response': existing_responses,
+            ':response': event['response'],
           }
         )
         
