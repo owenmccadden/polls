@@ -11,7 +11,6 @@ def lambda_handler(event, context):
     question_id = event['question_id']
     
     # Putting a try/catch to log to user when some error occurs
-    
     try:
         
         response = questions_table.get_item(
