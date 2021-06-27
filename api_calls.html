@@ -59,6 +59,22 @@
                 alert(JSON.stringify(parsed_items));
             }).catch(error => console.log('error', error));
         }
+        
+        
+        var get_question = (qid) => {
+          var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+          };
+    
+          fetch("https://ekl3omfw35.execute-api.us-east-1.amazonaws.com/dev/questions/" + qid, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                var parsed_items = JSON.parse(result).body;
+                alert(JSON.stringify(parsed_items));
+            }).catch(error => console.log('error', error));
+        }
+          
 
         
     </script>
